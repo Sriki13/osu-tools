@@ -101,9 +101,6 @@ namespace PerformanceCalculatorGUI.Profile
                 {
                     Beatmap = working.BeatmapInfo,
                     LocalPP = localPP,
-                    AimPP = categoryAttribs["Aim"],
-                    TapPP = categoryAttribs["Speed"],
-                    AccPP = categoryAttribs["Accuracy"],
                     LivePP = play.pp,
                     Mods = mods.Length > 0 ? mods.Select(m => m.Acronym).Aggregate((c, n) => $"{c}, {n}") : "",
                     PlayMaxCombo = scoreInfo.MaxCombo,
@@ -140,7 +137,7 @@ namespace PerformanceCalculatorGUI.Profile
                     Columns =
                     {
                         GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto,
-                        GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto, GridLength.Auto
+                        GridLength.Auto, GridLength.Auto, GridLength.Auto
                     },
                     Children =
                     {
@@ -150,9 +147,6 @@ namespace PerformanceCalculatorGUI.Profile
                         new Cell("acc") { Align = Align.Center },
                         new Cell("miss"),
                         new Cell("combo") { Align = Align.Center },
-                        new Cell("aim pp"),
-                        new Cell("tap pp"),
-                        new Cell("acc pp"),
                         new Cell("local pp"),
                         new Cell("pp change"),
                         new Cell("position change"),
@@ -164,9 +158,6 @@ namespace PerformanceCalculatorGUI.Profile
                             new Cell($"{item.PlayAccuracy * 100f:F2}" + " %") { Align = Align.Center },
                             new Cell($"{item.MissCount}") { Align = Align.Center },
                             new Cell($"{item.PlayMaxCombo}/{item.BeatmapMaxCombo}") { Align = Align.Center },
-                            new Cell($"{item.AimPP:F1}") { Align = Align.Right },
-                            new Cell($"{item.TapPP:F1}") { Align = Align.Right },
-                            new Cell($"{item.AccPP:F1}") { Align = Align.Right },
                             new Cell($"{item.LocalPP:F1}") { Align = Align.Right },
                             new Cell($"{item.LocalPP - item.LivePP:F1}") { Align = Align.Right },
                             new Cell($"{liveOrdered.IndexOf(item) - localOrdered.IndexOf(item):+0;-0;-}") { Align = Align.Center },

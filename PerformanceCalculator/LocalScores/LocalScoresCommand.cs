@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -113,7 +112,7 @@ namespace PerformanceCalculator.LocalScores
                         {
                             Statistics =
                             {
-                                [HitResult.Good] = replayEntry.Count100,
+                                [HitResult.Ok] = replayEntry.Count100,
                                 [HitResult.Great] = replayEntry.Count300,
                                 [HitResult.Meh] = replayEntry.Count50,
                                 [HitResult.Miss] = replayEntry.CountMiss
@@ -188,7 +187,7 @@ namespace PerformanceCalculator.LocalScores
             }
 
             Grid grid = new Grid();
-            grid.Columns.Add(createColumns(11 + (ExtraColumns?.Length ?? 0)));
+            grid.Columns.Add(createColumns(8 + (ExtraColumns?.Length ?? 0)));
             grid.Children.Add(
                 new Cell("#") { Align = Align.Center },
                 new Cell("beatmap") { Align = Align.Center },
@@ -197,9 +196,6 @@ namespace PerformanceCalculator.LocalScores
                 new Cell("acc") { Align = Align.Center },
                 new Cell("miss") { Align = Align.Center },
                 new Cell("combo") { Align = Align.Center },
-                new Cell("Total Aim pp") { Align = Align.Center },
-                new Cell("Total Tap pp") { Align = Align.Center },
-                new Cell("Accuracy pp") { Align = Align.Center },
                 new Cell("Date") { Align = Align.Center }
             );
 
@@ -223,27 +219,6 @@ namespace PerformanceCalculator.LocalScores
                     new Cell($"{item.ScoreInfo.Statistics[HitResult.Miss]}") { Align = Align.Right },
                     new Cell($"{item.ScoreInfo.MaxCombo}/{item.ScoreInfo.Combo}") { Align = Align.Right },
                 };
-
-                if (item.MapCategoryAttribs.TryGetValue("Aim", out _))
-                {
-                    // Delta attributes
-                    cells.AddRange(new List<Cell>
-                    {
-                        new Cell($"{item.MapCategoryAttribs["Aim"]:F1}") { Align = Align.Right },
-                        new Cell($"{item.MapCategoryAttribs["Tap"]:F1}") { Align = Align.Right },
-                        new Cell($"{item.MapCategoryAttribs["Accuracy"]:F1}") { Align = Align.Right }
-                    });
-                }
-                else
-                {
-                    // Xexxar attributes
-                    cells.AddRange(new List<Cell>
-                    {
-                        new Cell($"{item.MapCategoryAttribs["Total Aim pp"]:F1}") { Align = Align.Right },
-                        new Cell($"{item.MapCategoryAttribs["Total Tap pp"]:F1}") { Align = Align.Right },
-                        new Cell($"{item.MapCategoryAttribs["Accuracy pp"]:F1}") { Align = Align.Right }
-                    });
-                }
 
                 cells.Add(new Cell($"{item.TimeSet.Day:D2}-{item.TimeSet.Month:D2}-{item.TimeSet.Year}") { Align = Align.Right });
 
